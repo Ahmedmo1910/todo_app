@@ -6,4 +6,7 @@ class TaskModel {
     required this.task,
     this.isDone = false,
   });
+  void doneChange() {
+    isDone = !isDone;
+  }
 }

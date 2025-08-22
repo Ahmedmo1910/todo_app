@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/data/task_data.dart';
 
 class AddTaskWidget extends StatelessWidget {
+ // final Function addTaskCallback;
   const AddTaskWidget({
     super.key,
+    
   });
 
   @override
   Widget build(BuildContext context) {
+    String? newTaskTitle;
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFFDFF2EB),
@@ -25,10 +30,13 @@ class AddTaskWidget extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          const TextField(
+          TextField(
+            onChanged: (newText) {
+              newTaskTitle = newText;
+            },
             textAlign: TextAlign.center,
             autofocus: true,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               focusedBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Color(0xFF4A628A), width: 2),
               ),
@@ -37,7 +45,11 @@ class AddTaskWidget extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Provider.of<TaskData>(context, listen: false)
+                  .addTask(newTaskTitle!);
+              Navigator.pop(context);
+            },
             child: const Text(
               'Add',
               style: TextStyle(

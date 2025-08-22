@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/data/task_data.dart';
 import 'package:todo_app/widgets/custom_button.dart';
 import 'package:todo_app/widgets/tasks_widget.dart';
 
@@ -20,10 +22,10 @@ class TasksScreen extends StatelessWidget {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ListTile(
+            const ListTile(
               contentPadding: EdgeInsets.zero,
               leading: Icon(
                 Icons.playlist_add_check,
@@ -39,17 +41,17 @@ class TasksScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
-              '4 Tasks',
-              style: TextStyle(
+              '${Provider.of<TaskData>(context).tasks.length} Tasks',
+              style: const TextStyle(
                 color: Color(0xFF4A628A),
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
               ),
             ),
-            SizedBox(height: 10),
-            TasksWidget()
+            const SizedBox(height: 10),
+            const TasksWidget()
           ],
         ),
       ),
