@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/helper/database_helper.dart';
 import 'package:todo_app/models/task_model.dart';
 
 class TaskData extends ChangeNotifier {
   List<TaskModel> tasks = [];
 
-  void addTask(String newTaskTitle) {
-    tasks.add(
-      TaskModel(task: newTaskTitle),
-    );
+  Future<void> loadTasks() async {
+    tasks = await DatabaseHelper.getTasks();
     notifyListeners();
   }
 
-  void updateTask(TaskModel task) {
+  Future<void> addTask(String newTaskTitle) async {
+    TaskModel newTask = TaskModel(task: newTaskTitle);
+    await DatabaseHelper.insertTask(newTask);
+    await loadTasks();
+  }
+
+  Future<void> updateTask(TaskModel task) async {
     task.doneChange();
+    if (task.id != null) {
+      await DatabaseHelper.updateTask(task, task.id!);
+    }
     notifyListeners();
   }
 
-  void deleteTask(TaskModel task) {
+  Future<void> deleteTask(TaskModel task) async {
+    if (task.id != null) {
+      await DatabaseHelper.deleteTask(task.id!);
+    }
     tasks.remove(task);
     notifyListeners();
   }
