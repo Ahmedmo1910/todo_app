@@ -21,7 +21,7 @@ class TaskData extends ChangeNotifier {
     if (task.id != null) {
       await DatabaseHelper.updateTask(task, task.id!);
     }
-    notifyListeners();
+   await loadTasks();
   }
 
   Future<void> deleteTask(TaskModel task) async {
@@ -29,6 +29,6 @@ class TaskData extends ChangeNotifier {
       await DatabaseHelper.deleteTask(task.id!);
     }
     tasks.remove(task);
-    notifyListeners();
+    await loadTasks();
   }
 }

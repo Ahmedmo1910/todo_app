@@ -3,8 +3,17 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/data/task_data.dart';
 import 'package:todo_app/screens/tasks_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); 
+  final taskData = TaskData();
+  await taskData.loadTasks(); 
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => taskData,
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,13 +21,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => TaskData(),
-      child: const MaterialApp(
-        title: 'Todo App',
-        home: TasksScreen(),
-        debugShowCheckedModeBanner: false,
-      ),
+    return const MaterialApp(
+      title: 'Todo App',
+      home: TasksScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

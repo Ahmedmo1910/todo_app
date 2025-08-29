@@ -44,6 +44,7 @@ class DatabaseHelper {
 
     return List.generate(allTasks.length, (i) {
       return TaskModel(
+        id: allTasks[i]['id'],
         task: allTasks[i]['task'],
         isDone: allTasks[i]['isDone'] == 1,
       );
